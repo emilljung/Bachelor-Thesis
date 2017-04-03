@@ -55,7 +55,7 @@ namespace Nurn
 
 	bool NurnEngine::Send()
 	{
-		//this->Send(this->packager->getPacketPointer(), this->packager->getCurrentNetPacketSize());
+		this->Send(this->sendPacketMemoryPtr, packetSize);
 
 		return true;
 	}
@@ -70,9 +70,8 @@ namespace Nurn
 		int bytes_read = netCommunication.Peek(address, this->receivePacketMemoryPtr, 2);
 		if (bytes_read > 0)
 		{
-			//uint16_t expectedSize = buffer[0] | buffer[1] << 8;
-			//this->Receive(buffer, expectedSize);
-			//this->packetFilter->openNetPacket(buffer);
+			uint16_t expectedSize = this->receivePacketMemoryPtr[0] | this->receivePacketMemoryPtr[1] << 8;
+			this->Receive(this->receivePacketMemoryPtr, expectedSize);
 		}
 		return true;
 	}
