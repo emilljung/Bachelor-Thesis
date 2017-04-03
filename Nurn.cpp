@@ -4,15 +4,16 @@ namespace Nurn
 {
 	NurnEngine::NurnEngine()
 	{
-#ifdef DEBUGGING_NETWORK
-		this->packager = new Packager(&this->debugNetwork);
-		this->packetFilter = new PacketFilter(&this->debugNetwork);
-#endif
+		this->sendPacketMemoryPtr = new unsigned char[packetSize];
+		this->receivePacketMemoryPtr = new unsigned char[packetSize];
 		return;
 	}
 
 	NurnEngine::~NurnEngine()
 	{
+		delete[] this->sendPacketMemoryPtr;
+		delete[] this->receivePacketMemoryPtr;
+
 		NurnEngine::Shutdown();
 		return;
 	}
@@ -66,12 +67,11 @@ namespace Nurn
 
 	bool NurnEngine::Receive()
 	{
-		unsigned char buffer[packetSize];
-		int bytes_read = netCommunication.Peek(address, buffer, 2);
+		int bytes_read = netCommunication.Peek(address, this->receivePacketMemoryPtr, 2);
 		if (bytes_read > 0)
 		{
-			uint16_t expectedSize = buffer[0] | buffer[1] << 8;
-			this->Receive(buffer, expectedSize);
+			//uint16_t expectedSize = buffer[0] | buffer[1] << 8;
+			//this->Receive(buffer, expectedSize);
 			//this->packetFilter->openNetPacket(buffer);
 		}
 		return true;

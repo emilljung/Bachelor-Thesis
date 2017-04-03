@@ -59,6 +59,9 @@ namespace Nurn
 	private:
 		Address address;
 
+		unsigned char * sendPacketMemoryPtr;
+		unsigned char * receivePacketMemoryPtr;
+
 #ifdef USING_UDP
 		UDPCommunication netCommunication;
 #elif USING_TCP
