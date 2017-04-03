@@ -5,6 +5,11 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nurn", "Nurn.vcxproj", "{DB7257BD-F056-4EEB-9DB7-66B785CEB0E6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{15834787-E441-46F5-98A5-FE10D3AC627D}"
+	ProjectSection(SolutionItems) = preProject
+		Main.cpp = Main.cpp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
