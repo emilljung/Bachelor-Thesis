@@ -19,26 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DashPacket.hpp" />
-    <ClInclude Include="HealthPacket.hpp" />
     <ClInclude Include="DebugNetwork.hpp" />
-    <ClInclude Include="EventPacket.hpp" />
-    <ClInclude Include="PacketQueueInterface.hpp" />
-    <ClInclude Include="PingPacket.hpp" />
-    <ClInclude Include="ChangeSpellsPacket.hpp" />
-    <ClInclude Include="DamagePacket.hpp" />
-    <ClInclude Include="QuickBlendPacket.hpp" />
-    <ClInclude Include="AIStatePacket.hpp" />
-    <ClInclude Include="AnimationPacket.hpp" />
-    <ClInclude Include="ChargingPacket.hpp" />
-    <ClInclude Include="PacketFilter.hpp" />
-    <ClInclude Include="MetaDataPacket.hpp" />
-    <ClInclude Include="Packager.hpp" />
-    <ClInclude Include="PacketEnums.hpp" />
-    <ClInclude Include="PacketQueue.hpp" />
-    <ClInclude Include="SpellPacket.hpp" />
-    <ClInclude Include="TransformPacket.hpp" />
-    <ClInclude Include="UDPPacket.hpp" />
     <ClInclude Include="Address.hpp" />
     <ClInclude Include="Communication.hpp" />
     <ClInclude Include="NetworkDefines.hpp" />
@@ -51,8 +32,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DebugNetwork.cpp" />
-    <ClCompile Include="Packager.cpp" />
-    <ClCompile Include="PacketFilter.cpp" />
     <ClCompile Include="Address.cpp" />
     <ClCompile Include="Communication.cpp" />
     <ClCompile Include="Nurn.cpp" />

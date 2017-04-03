@@ -1,12 +1,15 @@
 #pragma once
 
 // DLL define
-
 #ifdef NURN_EXPORTS
 #define NURN_API __declspec(dllexport)
 #else
 #define NURN_API __declspec(dllimport)
 #endif
+
+
+// Packet size definition
+#define packetSize 1400
 
 // Protocol definition
 
@@ -15,12 +18,10 @@
 
 
 // Debug definition
-
 //#define DEBUGGING_NETWORK 1
 
 
 // Platform detection
-
 #define PLATFORM_WINDOWS  1
 #define PLATFORM_MAC      2
 #define PLATFORM_UNIX     3
