@@ -24,11 +24,6 @@ namespace Nurn
 			return false;
 		}
 
-		if (size > 1500)
-		{
-			throw std::runtime_error("Attempting to send too large message.");
-		}
-
 		// Attempt to send data to socket,
 		int32_t Return = send(networkSocket, (char*)data, size, 0);
 
