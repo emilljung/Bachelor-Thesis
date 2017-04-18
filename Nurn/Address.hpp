@@ -28,10 +28,10 @@ namespace Nurn
 		uint8_t GetC() const;
 		uint8_t GetD() const;
 		uint16_t GetPort() const;
-		SOCKADDR_IN GetAddress() const;
+		sockaddr_in GetAddress() const;
 
 		void SetIP(uint8_t a, uint8_t b, uint8_t c, uint8_t d);
-		void SetAddress(SOCKADDR_IN address);
+		void SetAddress(sockaddr_in address);
 
 		void ComposeAdress();
 
@@ -55,6 +55,6 @@ namespace Nurn
 
 		// The port stored as host endian
 		uint16_t port;
-		SOCKADDR_IN address;
+		sockaddr_in address;
 	};
 }

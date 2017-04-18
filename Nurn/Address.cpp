@@ -53,7 +53,7 @@ namespace Nurn
 		return this->port;
 	}        
 
-	SOCKADDR_IN Address::GetAddress() const
+	sockaddr_in Address::GetAddress() const
 	{ 
 		return this->address;
 	};
@@ -74,7 +74,7 @@ namespace Nurn
 		this->address.sin_addr.s_addr = ip.address;
 	}
 
-	void Address::SetAddress(SOCKADDR_IN address)
+	void Address::SetAddress(sockaddr_in address)
 	{
 		this->address = address;
 		this->ip.address = address.sin_addr.s_addr;
