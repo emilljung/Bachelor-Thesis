@@ -1,4 +1,5 @@
 #include "Nurn.hpp"
+#define PACKETSIZE 2000
 
 using namespace Nurn;
 int main()
@@ -6,14 +7,14 @@ int main()
 	NurnEngine nurn = NurnEngine();
 	nurn.InitializeHost();
 
-	unsigned char * data = new unsigned char[2000];
+	unsigned char * data = new unsigned char[PACKETSIZE];
 
-
+	Address source;
 	//Receive a message from client
-	while (nurn.Receive(data, 2000) > 0)
+	while (nurn.Receive(source, data, PACKETSIZE) > 0)
 	{
 		//Send the message back to client
-		nurn.Send(data, 2000); // write(sock, client_message, strlen(client_message));
+		nurn.Send(source, data, PACKETSIZE);
 	}
 
 	return 0;

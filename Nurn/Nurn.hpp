@@ -31,6 +31,7 @@ namespace Nurn
 
 		// Returns 1 or 0 if a byte has been recieved or not. Then returns the data through the void *
 		int Receive(void * data, int size);
+		int Receive(Address & source, void * data, int size);
 
 		void Shutdown();
 		
