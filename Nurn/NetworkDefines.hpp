@@ -1,6 +1,7 @@
 #pragma once
 
 #define USING_UDP 1
+
 #define PLATFORM_WINDOWS  1
 #define PLATFORM_MAC      2
 #define PLATFORM_UNIX     3
