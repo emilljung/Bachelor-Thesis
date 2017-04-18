@@ -1,6 +1,5 @@
 #pragma once
 
-#include "NetworkDefines.hpp"
 #include <stdint.h>
 
 // Standard libraries

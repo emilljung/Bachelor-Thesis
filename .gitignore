@@ -2,3 +2,4 @@
 *.opensdf
 .vs/
 x64/
+Debug/

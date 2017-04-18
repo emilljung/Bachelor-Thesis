@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NetworkDefines.hpp"
+
 #include "Address.hpp"
 #include <assert.h>
 
