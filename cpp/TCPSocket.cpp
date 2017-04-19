@@ -32,12 +32,12 @@ namespace Nurn
 
 	bool TCPSocket::ConnectSocket(const Address & connectionAddress)
 	{
+		sockaddr_in connAddrs = connectionAddress.GetAddress();
 		// Attempt to connect to another socket with the IP and port specified
-		int32_t Result = connect(networkSocket, (sockaddr*)&connectionAddress.GetAddress(), sizeof(sockaddr));
+		int32_t Result = connect(networkSocket, (sockaddr*)&connAddrs, sizeof(sockaddr));
 
-		if (Result == SOCKET_ERROR)
+		if (Result <= 0)
 		{
-			DWORD errorCode = WSAGetLastError();
 			return false;
 		}
 		
@@ -62,15 +62,19 @@ namespace Nurn
 		int OutSocketHandle = (int) accept(networkSocket, (sockaddr*)&address, &fromLength);
 
 		// If failed, throw exception
-		if (OutSocketHandle == INVALID_SOCKET)
+		if (OutSocketHandle <= 0)
 		{
 			//printf("failed to accept connection \n");
 			return false;
 		}
 
-		u_long Mode = 1;
-		int32_t Return = ioctlsocket(OutSocketHandle, FIONBIO, &Mode);
-		if (Return == SOCKET_ERROR)
+#if PLATFORM == PLATFORM_MAC || PLATFORM == PLATFORM_UNIX
+		int nonBlocking = 1;
+		if (fcntl(networkSocket, F_SETFL, O_NONBLOCK, nonBlocking) == -1)
+#elif PLATFORM == PLATFORM_WINDOWS
+		DWORD nonBlocking = 1;
+		if (ioctlsocket(networkSocket, FIONBIO, &nonBlocking) != 0)
+#endif
 		{
 			printf("failed to set non-blocking socket\n");
 			CloseSocket();

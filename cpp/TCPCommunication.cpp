@@ -28,7 +28,7 @@ namespace Nurn
 		int32_t Return = send(networkSocket, (char*)data, size, 0);
 
 		// If some error
-		if (Return == SOCKET_ERROR)
+		if (Return <= 0)
 		{
 			return false;
 		}
