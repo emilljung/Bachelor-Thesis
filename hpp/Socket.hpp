@@ -7,7 +7,7 @@
 #include <winsock2.h>
 #pragma comment( lib, "ws2_32.lib" )
 
-#else PLATFORM == PLATFORM_MAC || PLATFORM == PLATFORM_UNIX
+#elif PLATFORM == PLATFORM_MAC || PLATFORM == PLATFORM_UNIX
 
 #include <sys/socket.h>
 #include <netinet/in.h>
