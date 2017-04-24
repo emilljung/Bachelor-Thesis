@@ -9,6 +9,7 @@
 
 #else PLATFORM == PLATFORM_MAC || PLATFORM == PLATFORM_UNIX
 
+#include <netinet/tcp.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <fcntl.h>
