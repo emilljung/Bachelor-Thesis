@@ -14,6 +14,7 @@ int main(int argc, char* argv[])
 	}
 
 	int packetsize = atoi(argv[1]);
+	std::cout << "Packetsize:" << packetsize << std::endl;
 	NurnEngine nurn = NurnEngine();
 	nurn.InitializeHost();
 
@@ -33,7 +34,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	std::cout << packetsize << std::endl;
+	std::cout << "Timeout: Shutting down server" << std::endl;
 
 	return 0;
 }
