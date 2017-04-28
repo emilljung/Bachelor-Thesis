@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-#ifdef PLATFORM == PLATFORM_WINDOWS
+#if PLATFORM == PLATFORM_WINDOWS
 int getCurrentPhysicalMemoryUsage()
 {
 	PROCESS_MEMORY_COUNTERS_EX pmc;
