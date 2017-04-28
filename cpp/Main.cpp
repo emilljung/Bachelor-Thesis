@@ -7,7 +7,7 @@
 #include <fstream>
 #include <string>
 
-#ifdef  PLATFORM == PLATFORM_WINDOWS
+#if PLATFORM == PLATFORM_WINDOWS
 #include "windows.h"
 #include "psapi.h"
 #else //PLATFORM == PLATFORM_MAC || PLATFORM == PLATFORM_UNIX
