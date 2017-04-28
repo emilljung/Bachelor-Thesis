@@ -5,6 +5,7 @@
 #include <chrono>
 #include <vector>
 #include <fstream>
+#include <string>
 
 #ifdef  PLATFORM == PLATFORM_WINDOWS
 #include "windows.h"
@@ -25,14 +26,15 @@ using namespace Nurn;
 int main(int argc, char* argv[])
 {
 	// Check the number of parameters
-	if (argc < 2) {
+	if (argc < 3) {
 		// Tell the user how to run the program
-		std::cerr << "Missing parameter: packetsize" << std::endl;
+		std::cerr << "Missing parameter, parameters should be packetsize and executionnumber" << std::endl;
 		return 1;
 	}
 
 	int packetsize = atoi(argv[1]);
-	std::cout << "Packetsize:" << packetsize << std::endl;
+	std::string executionnumber = argv[2];
+	std::cout << "Packetsize: " << packetsize << std::endl;
 	NurnEngine nurn = NurnEngine();
 	nurn.InitializeHost();
 
@@ -57,15 +59,21 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	std::ofstream myfile;
-	myfile.open("example.txt");
-	long long counter = 1;
+	int ramUsage = getCurrentPhysicalMemoryUsage();
+	std::ofstream testdatafile;
+
+	//Write ramtestdata to memory
+	testdatafile.open(executionnumber + "ram" + ".txt", std::ofstream::app);
+	testdatafile << ramUsage << std::endl;
+	testdatafile.close();
+
+	//Write cputimetestdata to memory
+	testdatafile.open(executionnumber + "cputime" + ".txt", std::ofstream::app);
 	for (auto& time : cpuTimes)
 	{
-		 myfile << counter++ << "	"<< time << std::endl;
+		testdatafile << time << std::endl;
 	}
-	myfile.close();
-	//write cputimes to file
+	testdatafile.close();
 
 	std::cout << "Timeout: Shutting down server" << std::endl;
 
