@@ -22,6 +22,10 @@
 
 int getCurrentPhysicalMemoryUsage();
 
+#if PLATFORM == PLATFORM_UNIX
+int parseLine(char* line);
+#endif
+
 using namespace Nurn;
 int main(int argc, char* argv[])
 {
