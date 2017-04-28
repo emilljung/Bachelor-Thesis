@@ -17,6 +17,8 @@
 #include "sys/vtimes.h"
 #endif
 
+#define TIMEOUT_MS 10000
+
 int getCurrentPhysicalMemoryUsage();
 
 using namespace Nurn;
@@ -42,7 +44,8 @@ int main(int argc, char* argv[])
 	std::chrono::high_resolution_clock::time_point cpuTime = cpuTime = std::chrono::high_resolution_clock::now();
 	std::vector<long long> cpuTimes;
 	//Receive a message from client
-	while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - timeSinceLastPacket).count() < 10000)
+	//If nothing is recieved in timeout time, exit the loop
+	while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - timeSinceLastPacket).count() < TIMEOUT_MS)
 	{
 		cpuTime = std::chrono::high_resolution_clock::now();
 		if(nurn.Receive(source, data, packetsize) > 0)
@@ -54,7 +57,6 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	std::cout << cpuTimes.size() << std::endl;
 	std::ofstream myfile;
 	myfile.open("example.txt");
 	long long counter = 1;
