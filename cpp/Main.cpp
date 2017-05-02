@@ -67,12 +67,12 @@ int main(int argc, char* argv[])
 	std::ofstream testdatafile;
 
 	//Write ramtestdata to memory
-	testdatafile.open(executionnumber + "ram" + ".txt", std::ofstream::app);
+	testdatafile.open("./results/" + executionnumber + "ram" + ".txt", std::ofstream::app);
 	testdatafile << ramUsage << std::endl;
 	testdatafile.close();
 
 	//Write cputimetestdata to memory
-	testdatafile.open(executionnumber + "cputime" + ".txt", std::ofstream::app);
+	testdatafile.open("./results/" + executionnumber + "cputime" + ".txt", std::ofstream::app);
 	for (auto& time : cpuTimes)
 	{
 		testdatafile << time << std::endl;
