@@ -48,7 +48,8 @@ int main(int argc, char* argv[])
 
 	std::chrono::steady_clock::time_point timeSinceLastPacket = std::chrono::steady_clock::now();
 	std::chrono::high_resolution_clock::time_point cpuTime = cpuTime = std::chrono::high_resolution_clock::now();
-	std::vector<long long> cpuTimes;
+	std::vector<long long> cpuRecieveTimes;
+	std::vector<long long> cpuSendTimes;
 	//Receive a message from client
 	//If nothing is recieved in timeout time, exit the loop
 	while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - timeSinceLastPacket).count() < TIMEOUT_MS)
@@ -56,9 +57,11 @@ int main(int argc, char* argv[])
 		cpuTime = std::chrono::high_resolution_clock::now();
 		if(nurn.Receive(source, data, packetsize) > 0)
 		{
+			cpuRecieveTimes.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - cpuTime).count());
+			cpuTime = std::chrono::high_resolution_clock::now();
 			//Send the message back to client
 			nurn.Send(source, data, packetsize);
-			cpuTimes.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - cpuTime).count());
+			cpuSendTimes.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - cpuTime).count());
 			timeSinceLastPacket = std::chrono::steady_clock::now();
 		}
 	}
@@ -72,8 +75,15 @@ int main(int argc, char* argv[])
 	testdatafile.close();
 
 	//Write cputimetestdata to memory
-	testdatafile.open("./results/" + executionnumber + "cputime" + ".txt", std::ofstream::app);
-	for (auto& time : cpuTimes)
+	testdatafile.open("./results/" + executionnumber + "cpurecievetime" + ".txt", std::ofstream::app);
+	for (auto& time : cpuRecieveTimes)
+	{
+		testdatafile << time << std::endl;
+	}
+	testdatafile.close();
+
+	testdatafile.open("./results/" + executionnumber + "cpusendtime" + ".txt", std::ofstream::app);
+	for (auto& time : cpuSendTimes)
 	{
 		testdatafile << time << std::endl;
 	}
