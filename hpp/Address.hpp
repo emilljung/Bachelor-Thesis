@@ -7,7 +7,7 @@
 // Standard libraries
 #if PLATFORM == PLATFORM_WINDOWS
 #include <winsock2.h>
-#pragma comment( lib, "wsock32.lib" )
+#pragma comment( lib, "ws2_32.lib" )
 #elif PLATFORM == PLATFORM_UNIX
 #include <sys/socket.h>
 #include <netinet/in.h>
