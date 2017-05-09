@@ -53,6 +53,8 @@ int main(int argc, char* argv[])
 	std::vector<unsigned long long> cpuSendRecieveStart;
 	std::vector<unsigned long long> cpuRecieveTimes;
 	std::vector<unsigned long long> cpuSendTimes;
+	std::vector<uint32_t> clientId;	
+	std::vector<uint32_t> packetSequence;
 	//Receive a message from client
 	//If nothing is recieved in timeout time, exit the loop
 	while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - timeSinceLastPacket).count() < TIMEOUT_MS)
@@ -65,6 +67,8 @@ int main(int argc, char* argv[])
 			//Send the message back to client
 			nurn.Send(source, data, packetsize);
 			cpuSendTimes.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - cpuTime).count());
+			clientId.push_back(data[8] | data[9] | data[10] | data[11]);
+			packetSequence.push_back(data[12] | data[13] | data[14] | data[15]);
 			timeSinceLastPacket = std::chrono::steady_clock::now();
 		}
 	}
@@ -81,7 +85,7 @@ int main(int argc, char* argv[])
 	testdatafile.open("./results/" + executionnumber + "-" + runnumber + "cputimestamps" + ".txt", std::ofstream::app);
 	for (long long i = 0; i < cpuRecieveTimes.size(); ++i)
 	{
-		testdatafile << cpuSendRecieveStart.at(i) << "," << cpuRecieveTimes.at(i) << "," << cpuSendTimes.at(i) << std::endl;
+		testdatafile << packetSequence.at(i) << "," << clientId.at(i) << "," << cpuSendRecieveStart.at(i) << "," << cpuRecieveTimes.at(i) << "," << cpuSendTimes.at(i) << std::endl;
 	}
 	testdatafile.close();
 
