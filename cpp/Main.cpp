@@ -48,18 +48,20 @@ int main(int argc, char* argv[])
 	
 
 	std::chrono::steady_clock::time_point timeSinceLastPacket = std::chrono::steady_clock::now();
-	std::chrono::high_resolution_clock::time_point cpuTime = cpuTime = std::chrono::high_resolution_clock::now();
-	std::vector<long long> cpuRecieveTimes;
-	std::vector<long long> cpuSendTimes;
+	std::chrono::high_resolution_clock::time_point cpuTime = std::chrono::high_resolution_clock::now();
+	unsigned long long tempCpuTime;
+	std::vector<unsigned long long> cpuSendRecieveStart;
+	std::vector<unsigned long long> cpuRecieveTimes;
+	std::vector<unsigned long long> cpuSendTimes;
 	//Receive a message from client
 	//If nothing is recieved in timeout time, exit the loop
 	while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - timeSinceLastPacket).count() < TIMEOUT_MS)
 	{
-		cpuTime = std::chrono::high_resolution_clock::now();
+		tempCpuTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - cpuTime).count();
 		if(nurn.Receive(source, data, packetsize) > 0)
 		{
-			cpuRecieveTimes.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - cpuTime).count());
-			cpuTime = std::chrono::high_resolution_clock::now();
+			cpuSendRecieveStart.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - cpuTime).count());
+			cpuRecieveTimes.push_back(tempCpuTime);
 			//Send the message back to client
 			nurn.Send(source, data, packetsize);
 			cpuSendTimes.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - cpuTime).count());
@@ -76,17 +78,10 @@ int main(int argc, char* argv[])
 	testdatafile.close();
 
 	//Write cputimetestdata to memory
-	testdatafile.open("./results/" + executionnumber + "-" + runnumber + "cpurecievetime" + ".txt", std::ofstream::app);
-	for (auto& time : cpuRecieveTimes)
+	testdatafile.open("./results/" + executionnumber + "-" + runnumber + "cputimestamps" + ".txt", std::ofstream::app);
+	for (long long i = 0; i < cpuRecieveTimes.size(); ++i)
 	{
-		testdatafile << time << std::endl;
-	}
-	testdatafile.close();
-
-	testdatafile.open("./results/" + executionnumber + "-" + runnumber + "cpusendtime" + ".txt", std::ofstream::app);
-	for (auto& time : cpuSendTimes)
-	{
-		testdatafile << time << std::endl;
+		testdatafile << cpuSendRecieveStart.at(i) << "," << cpuRecieveTimes.at(i) << "," << cpuSendTimes.at(i) << std::endl;
 	}
 	testdatafile.close();
 
