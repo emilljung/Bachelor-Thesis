@@ -30,14 +30,15 @@ using namespace Nurn;
 int main(int argc, char* argv[])
 {
 	// Check the number of parameters
-	if (argc < 3) {
+	if (argc < 4) {
 		// Tell the user how to run the program
-		std::cerr << "Missing parameter, parameters should be packetsize and executionnumber" << std::endl;
+		std::cerr << "Missing parameter, parameters should be packetsize, executionnumber, and runnumber" << std::endl;
 		return 1;
 	}
 
 	int packetsize = atoi(argv[1]);
 	std::string executionnumber = argv[2];
+	std::string runnumber = argv[3];
 	std::cout << "Packetsize: " << packetsize << std::endl;
 	NurnEngine nurn = NurnEngine();
 	nurn.InitializeHost();
@@ -70,19 +71,19 @@ int main(int argc, char* argv[])
 	std::ofstream testdatafile;
 
 	//Write ramtestdata to memory
-	testdatafile.open("./results/" + executionnumber + "ram" + ".txt", std::ofstream::app);
+	testdatafile.open("./results/" + executionnumber + "-" + runnumber  + "ram" + ".txt", std::ofstream::app);
 	testdatafile << ramUsage << std::endl;
 	testdatafile.close();
 
 	//Write cputimetestdata to memory
-	testdatafile.open("./results/" + executionnumber + "cpurecievetime" + ".txt", std::ofstream::app);
+	testdatafile.open("./results/" + executionnumber + "-" + runnumber + "cpurecievetime" + ".txt", std::ofstream::app);
 	for (auto& time : cpuRecieveTimes)
 	{
 		testdatafile << time << std::endl;
 	}
 	testdatafile.close();
 
-	testdatafile.open("./results/" + executionnumber + "cpusendtime" + ".txt", std::ofstream::app);
+	testdatafile.open("./results/" + executionnumber + "-" + runnumber + "cpusendtime" + ".txt", std::ofstream::app);
 	for (auto& time : cpuSendTimes)
 	{
 		testdatafile << time << std::endl;
